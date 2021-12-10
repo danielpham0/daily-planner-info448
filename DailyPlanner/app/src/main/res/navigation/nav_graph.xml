@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Daniel Pham: I wrote the NavGraph for EventListFragment and EventDetailFragment
+    and wrote the required actions and arguments for them.  -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/EventListFragment">
+    <fragment
+        android:id="@+id/EventListFragment"
+        android:name="edu.uw.daniep7.dailyplanner.EventListFragment"
+        android:label="Event List Fragment"
+        tools:layout="@layout/fragment_event_list">
+        <action
+            android:id="@+id/action_to_EventDetailFragment"
+            app:destination="@+id/EventDetailFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/EventDetailFragment"
+        android:name="edu.uw.daniep7.dailyplanner.EventDetailFragment"
+        android:label="Event Detail Fragment"
+        tools:layout="@layout/fragment_event_detail">
+        <argument
+            android:name="event"
+            app:argType="edu.uw.daniep7.dailyplanner.Event"
+            />
+        <action
+            android:id="@+id/action_to_EventListFragment"
+            app:destination="@+id/EventListFragment"
+            />
+    </fragment>
+
+</navigation>

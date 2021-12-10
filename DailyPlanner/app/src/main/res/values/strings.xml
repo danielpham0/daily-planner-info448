@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Daily Planner</string>
+    <string name="add_event">Add Event</string>
+    <string name="event_list_title">Today\'s Events</string>
+    <string name="event_list_desc"><![CDATA[View your events & departure times!]]></string>
+    <string name="event_type_icon_desc">Event Type Icon</string>
+    <string name="temp_title_for_event">Title for Event</string>
+    <string name="temp_address_of_event">Address of Event</string>
+    <string name="temp_event_distance">0.8 Miles Away</string>
+    <string name="temp_arr_time">12:30PM</string>
+    <string name="arrival_label">Arrival</string>
+    <string name="temp_dep_time">5 min</string>
+    <string name="dep_label">Departure</string>
+    <string name="more_button_desc">Button for more options, like delete event.</string>
+</resources>

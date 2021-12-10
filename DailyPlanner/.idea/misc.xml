@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable-anydpi/food_icon.xml" value="0.215625" />
+        <entry key="app/src/main/res/drawable-anydpi/school_icon.xml" value="0.215625" />
+        <entry key="app/src/main/res/drawable-anydpi/shopping_icon.xml" value="0.33170382503776275" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.215625" />
+        <entry key="app/src/main/res/drawable/mode_rounded_border.xml" value="0.21145833333333333" />
+        <entry key="app/src/main/res/drawable/rounded_color_with_fill.xml" value="0.21145833333333333" />
+        <entry key="app/src/main/res/drawable/type_rounded_border.xml" value="0.21145833333333333" />
+        <entry key="app/src/main/res/layout-w600dp/activity_main.xml" value="0.13139329805996472" />
+        <entry key="app/src/main/res/layout-w600dp/fragment_event_detail.xml" value="0.15961199294532627" />
+        <entry key="app/src/main/res/layout-w600dp/fragment_event_list.xml" value="0.30499468650371947" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/event_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/event_item_layout.xml" value="0.5606469962047806" />
+        <entry key="app/src/main/res/layout/fragment_event_detail.xml" value="0.3500678079075819" />
+        <entry key="app/src/main/res/layout/fragment_event_list.xml" value="0.1721014492753623" />
+        <entry key="app/src/main/res/menu/main_menu.xml" value="0.26927083333333335" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
