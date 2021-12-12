@@ -21,19 +21,23 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+// Our repository for events which connects Room Database and Google API (DP)
 class EventRepository(private val eventDao: EventDao) {
     // Our API Key
     private val directionsKey: String = BuildConfig.DIRECTIONS_KEY
     val readAllData: LiveData<List<Event>> = eventDao.readAllData()
 
+    // Add Event through just DAO
     suspend fun addEvent(event: Event) {
         eventDao.addEvent(event)
     }
 
+    // Update Event through just DAO
     suspend fun updateEvent(event: Event) {
         eventDao.updateEvent(event)
     }
 
+    // Delete Event through just DAO
     suspend fun deleteEvent(event: Event) {
         eventDao.deleteEvent(event)
     }

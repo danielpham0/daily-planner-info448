@@ -44,7 +44,7 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-// Fragment for the main menu, and a list of events which updates based on current location.
+// Fragment for the main menu, and a list of events which updates based on current location. (DP)
 class EventListFragment : Fragment() {
     // Temporary data, to be removed once we have add event working
     private val tempData: MutableList<Event> = mutableListOf(
@@ -74,6 +74,7 @@ class EventListFragment : Fragment() {
     private lateinit var adapter: EventAdapter
     private lateinit var eventViewModel: EventViewModel
 
+    // Initializes all of the functional necessities of the fragment, and inflates the view
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?
     ): View? {
@@ -168,7 +169,7 @@ class EventListFragment : Fragment() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
-    // Helper function to create the channel for notifications
+    // Helper function to create a custom channel for Event notifications
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "EventReminderChannel"
@@ -310,6 +311,7 @@ class EventAdapter(private val navController: NavController, private val viewMod
             }
         }
     }
+    // Necessary to implement the recycler viewer interface
     override fun getItemCount() = data.size
 
     // Allows us to set the data from the outside.

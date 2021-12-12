@@ -8,10 +8,13 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
+// Custom Broadcast Receiver based on our needs (DP)
 class ReminderBroadcast: BroadcastReceiver() {
+    // Once a notification intent is received, construct the notification and push it
     override fun onReceive(p0: Context?, p1: Intent?) {
         // Sets title based on what is passed in.
         val title: String = p1?.getStringExtra("title").toString()
+        // Construct the notification
         val builder = p0?.let { NotificationCompat.Builder(it, "notifyEvent")
             .setSmallIcon(R.drawable.alarm_icon)
             .setContentTitle("Event Reminder")
@@ -19,6 +22,7 @@ class ReminderBroadcast: BroadcastReceiver() {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)}
         val notificationManager = p0?.let { NotificationManagerCompat.from(it) }
 
+        // Send the notification
         if (notificationManager != null) {
             if (builder != null) {
                 notificationManager.notify(200,builder.build())

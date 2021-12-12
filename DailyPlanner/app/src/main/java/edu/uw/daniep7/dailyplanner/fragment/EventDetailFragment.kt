@@ -22,7 +22,7 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-// Fragment for details about a specific event.
+// Fragment for details about a specific event (DP)
 class EventDetailFragment : Fragment() {
     // variables for each item we use to adjust text views and image views properly
     private var event: Event? = null
@@ -64,6 +64,7 @@ class EventDetailFragment : Fragment() {
             eventMode = event!!.mode.replaceFirstChar { it.uppercase() }
         }
     }
+
     // inflates the views and customizes it to data from the Event object
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

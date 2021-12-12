@@ -9,6 +9,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import edu.uw.daniep7.dailyplanner.model.Event
 
+// Extends RoomDatabase and creates a class for a Database for Events (DP)
 @Database(entities = [Event::class], version = 1, exportSchema = false)
 abstract class EventDatabase: RoomDatabase(){
     abstract fun eventDao(): EventDao
@@ -17,6 +18,7 @@ abstract class EventDatabase: RoomDatabase(){
         // If null, we instantiate and build the database.
         @Volatile
         private var INSTANCE: EventDatabase? = null
+        // Returns an EventDatabase object, whether or not it has been instantiated
         fun getDatabase(context: Context): EventDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {

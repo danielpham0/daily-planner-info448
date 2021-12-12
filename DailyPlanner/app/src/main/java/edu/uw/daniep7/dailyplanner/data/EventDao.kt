@@ -7,18 +7,18 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import edu.uw.daniep7.dailyplanner.model.Event
 
-// Standard Dao Interface
+// Standard Database Access Object Interface (DP)
 @Dao
 interface EventDao {
-    // Built in tag for insert
+    // Built in tag for inserting into the event table
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addEvent (event: Event)
 
-    // Built in tag for update
+    // Built in tag for updating an item in the event table
     @Update
     suspend fun updateEvent(event: Event)
 
-    // Built in tag for delete
+    // Built in tag for deleting an item in the event table
     @Delete
     suspend fun deleteEvent(event: Event)
 
