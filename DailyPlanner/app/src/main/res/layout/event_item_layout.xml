@@ -114,11 +114,11 @@
             android:textAlignment="center"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <ImageButton
-        android:id="@+id/event_item_more_button"
+        android:id="@+id/event_item_delete_button"
         android:layout_width="0dp"
         android:layout_weight=".075"
         android:layout_height="match_parent"
-        android:contentDescription="@string/more_button_desc"
+        android:contentDescription="@string/delete_button_desc"
         android:src="@drawable/delete_icon"
         android:backgroundTint="#646464"
         />

@@ -1,7 +1,7 @@
 /** Daniel Pham: I wrote all of the code for this Event Detail Fragment,
  *  which handles onCreate and onCreateView for detailed views of an Event.
  *  These two insert our event data into views from the EventDetail Layout* */
-package edu.uw.daniep7.dailyplanner
+package edu.uw.daniep7.dailyplanner.fragment
 
 import android.net.Uri
 import android.os.Build
@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import edu.uw.daniep7.dailyplanner.R
+import edu.uw.daniep7.dailyplanner.model.Event
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneOffset

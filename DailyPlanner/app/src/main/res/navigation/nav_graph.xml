@@ -18,12 +18,12 @@
     </fragment>
     <fragment
         android:id="@+id/EventDetailFragment"
-        android:name="edu.uw.daniep7.dailyplanner.EventDetailFragment"
+        android:name="edu.uw.daniep7.dailyplanner.fragment.EventDetailFragment"
         android:label="Event Detail Fragment"
         tools:layout="@layout/fragment_event_detail">
         <argument
             android:name="event"
-            app:argType="edu.uw.daniep7.dailyplanner.Event"
+            app:argType="edu.uw.daniep7.dailyplanner.model.Event"
             />
         <action
             android:id="@+id/action_to_EventListFragment"

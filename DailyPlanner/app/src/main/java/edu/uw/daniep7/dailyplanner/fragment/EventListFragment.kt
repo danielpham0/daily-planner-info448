@@ -10,15 +10,15 @@
 package edu.uw.daniep7.dailyplanner
 
 import android.Manifest
-import android.content.ContentValues
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,12 +30,13 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.*
-import edu.uw.daniep7.dailyplanner.network.EventListViewModel
+import edu.uw.daniep7.dailyplanner.model.Event
+import edu.uw.daniep7.dailyplanner.viewmodel.EventViewModel
+//import edu.uw.daniep7.dailyplanner.network.EventListViewModel
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -44,21 +45,21 @@ import java.time.format.DateTimeFormatter
 class EventListFragment : Fragment() {
     private val tempData: MutableList<Event> = mutableListOf(
         Event(
-            "Go to MGH", "school",
+            0, "Go to MGH", "school",
             "Desc 1.2", null, "1851 NE Grant Ln, Seattle, WA 98105",
             1639161592, "walking", "Undefined", -1
         ),
         Event(
-            "Go to TP Tea", "food",
+            0, "Go to TP Tea", "food",
             "Desc 2", "1851 NE Grant Ln, Seattle, WA 98105",
             "1312 NE 45th St Seattle, WA 98105",
-            1639161592, "walking", "Undefined", -1
+            1739161592, "walking", "Undefined", -1
         ),
         Event(
-            "Go to H Mart", "shopping",
+            0, "Go to H Mart", "shopping",
             "Desc 3", "1312 NE 45th St Seattle, WA 98105",
             "4216 University Way NE, Seattle, WA 98105",
-            1639164592, "walking", "Undefined", -1
+            1839364592, "walking", "Undefined", -1
         )
     )
     private var tempCount: Int = 0
@@ -66,28 +67,23 @@ class EventListFragment : Fragment() {
     private lateinit var locationCallback: LocationCallback
     var data : MutableList<Event> = mutableListOf()
     private lateinit var adapter: EventAdapter
-    private lateinit var viewModel: ViewModel
+    private lateinit var eventViewModel: EventViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_event_list, container, false)
-        viewModel = ViewModelProvider(this).get(EventListViewModel::class.java)
-        val observer = Observer<List<Event>> {
-            data.clear()
-            data.addAll(it)
-            adapter?.let{
-                it.notifyDataSetChanged()
-            }
-        }
-        (viewModel as EventListViewModel).eventListData.observe(viewLifecycleOwner, observer)
 
-        // Grab event data from internal storage
-        (viewModel as EventListViewModel).getEvents(requireContext())
+
+        eventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
+        eventViewModel.readAllData.observe(viewLifecycleOwner, Observer { events ->
+            data = events.toMutableList()
+            adapter.setData(events)
+        })
 
         // adapter content
-        adapter = EventAdapter(data, findNavController(), viewModel as EventListViewModel)
+        adapter = EventAdapter(findNavController(), eventViewModel)
         val recycler = rootView.findViewById<RecyclerView>(R.id.recycler_list)
         recycler.layoutManager = LinearLayoutManager(activity)
         recycler.adapter = adapter
@@ -111,8 +107,8 @@ class EventListFragment : Fragment() {
                     locCoordinates = "${locationResult.lastLocation.latitude}," +
                             "${locationResult.lastLocation.longitude}"
                     if (data.size >= 1) {
-                        (viewModel as EventListViewModel).updateOrigin(
-                            requireContext(), 0, locCoordinates)
+                        data[0].origin = locCoordinates
+                        eventViewModel.getDirectionsAndUpdate(data[0])
                     }
                 }
             }
@@ -132,8 +128,13 @@ class EventListFragment : Fragment() {
         rootView.findViewById<Button>(R.id.add_event_button).setOnClickListener{
 //            startActivity(goToSecondActivity)
             Toast.makeText(activity, "Will connect to add event activity!",
-                Toast.LENGTH_LONG).show();
-            (viewModel as EventListViewModel).addEvent(requireContext(), tempData[tempCount])
+                Toast.LENGTH_LONG).show()
+            // Here is where we basically create a new event off of the input
+            // -- if it is current location we use a location listener to insert previous location
+            // -- set the origin based on the other events
+            // -- set the address off of google api's find place
+            // -- input check as well
+            eventViewModel.getDirectionsAndAdd(tempData[tempCount])
             if (tempCount + 1 < tempData.size) tempCount +=1
         }
         return rootView
@@ -148,9 +149,9 @@ class EventListFragment : Fragment() {
 // each time we have an update on location, we want to update origin for nulls
 // and we also want to be able to check the time to see if we need to
 // maybe an event listener for location updates --> updates loc if loc is null
-class EventAdapter(private val data: MutableList<Event>, private val navController: NavController,
-                   private val viewModel: EventListViewModel) :
+class EventAdapter(private val navController: NavController, private val viewModel: EventViewModel) :
     RecyclerView.Adapter<EventAdapter.ViewHolder>() {
+    private var data = emptyList<Event>()
     // List of the main views we will be altering
     private lateinit var context: Context
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -162,7 +163,7 @@ class EventAdapter(private val data: MutableList<Event>, private val navControll
         val eventDesc: TextView = view.findViewById(R.id.event_item_desc)
         val eventValOne: TextView = view.findViewById(R.id.event_item_val_one)
         val eventValTwo: TextView = view.findViewById(R.id.event_item_val_two)
-        val eventMoreButton: ImageButton = view.findViewById(R.id.event_item_more_button)
+        val eventDeleteButton: ImageButton = view.findViewById(R.id.event_item_delete_button)
         val eventLabelOne: TextView = view.findViewById(R.id.event_item_label_one)
         val eventLabelTwo: TextView = view.findViewById(R.id.event_item_label_two)
     }
@@ -196,8 +197,23 @@ class EventAdapter(private val data: MutableList<Event>, private val navControll
             navController.navigate(R.id.EventDetailFragment, argBundle)
         }
         // delete button to get rid of the recycler item
-        viewHolder.eventMoreButton.setOnClickListener {
-            viewModel.deleteEvent(context, position)
+        viewHolder.eventDeleteButton.setOnClickListener {
+            val builder = AlertDialog.Builder(context)
+            builder.setPositiveButton("Yes") { _, _ ->
+                viewModel.deleteEvent(resultItem)
+                if (data.size-1 > position) {
+                    data[position+1].origin = resultItem.origin
+                    viewModel.getDirectionsAndUpdate(data[position+1])
+                }
+                Toast.makeText(
+                    context,
+                    "Successfully removed: ${resultItem.title}.",
+                    Toast.LENGTH_SHORT).show()
+            }
+            builder.setNegativeButton("No") { _, _ -> }
+            builder.setTitle("Delete event?")
+            builder.setMessage("Are you sure you want to delete '${resultItem.title}?'")
+            builder.create().show()
         }
 
         // Estimated Arrivals and Departures, with Epoch conversions
@@ -244,4 +260,9 @@ class EventAdapter(private val data: MutableList<Event>, private val navControll
         }
     }
     override fun getItemCount() = data.size
+
+    fun setData(events: List<Event>) {
+        this.data = events
+        notifyDataSetChanged()
+    }
 }
