@@ -1,3 +1,6 @@
+/** Daniel Pham: I wrote the code for the Event Database, implementing Room.
+ * Standard boiler plate code for instantiating a database. * */
+
 package edu.uw.daniep7.dailyplanner.data
 
 import android.content.Context
@@ -11,6 +14,7 @@ abstract class EventDatabase: RoomDatabase(){
     abstract fun eventDao(): EventDao
 
     companion object{
+        // If null, we instantiate and build the database.
         @Volatile
         private var INSTANCE: EventDatabase? = null
         fun getDatabase(context: Context): EventDatabase {

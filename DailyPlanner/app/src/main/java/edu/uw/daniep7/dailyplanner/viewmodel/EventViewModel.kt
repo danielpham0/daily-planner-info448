@@ -1,3 +1,5 @@
+/** Daniel Pham: I wrote the methods in this view model, which connect the repository
+ * to our UI * */
 package edu.uw.daniep7.dailyplanner.viewmodel
 
 import android.app.Application

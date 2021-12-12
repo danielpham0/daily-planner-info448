@@ -1,6 +1,6 @@
-/** Daniel Pham: I wrote all of the code for this Event Detail Fragment,
+/** Daniel Pham: I wrote the code for this Event Detail Fragment,
  *  which handles onCreate and onCreateView for detailed views of an Event.
- *  These two insert our event data into views from the EventDetail Layout* */
+ *  These two functions insert our event data into views from the EventDetail Layout* */
 package edu.uw.daniep7.dailyplanner.fragment
 
 import android.net.Uri
@@ -22,7 +22,7 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-// Fragment for details about a specific movie.
+// Fragment for details about a specific event.
 class EventDetailFragment : Fragment() {
     // variables for each item we use to adjust text views and image views properly
     private var event: Event? = null
@@ -49,11 +49,13 @@ class EventDetailFragment : Fragment() {
             eventNum = (it.getInt("eventNum") + 1).toString()
             eventTitle = event!!.title
             eventAddress = event!!.address
+            // For the first item in the list, we will always be using current location
             eventOrigin = if (eventNum == "1") {
                 "Current Location"
             } else {
                 event?.origin ?: "Current Location"
             }
+            // Formats the arrival time into a readable manner
             eventArrival = dateFormat.format(Instant.ofEpochSecond(event!!.arrivalTime.toLong())
                 .atZone(ZoneId.systemDefault()).toLocalDateTime())
             eventType = event!!.eventType
@@ -62,7 +64,7 @@ class EventDetailFragment : Fragment() {
             eventMode = event!!.mode.replaceFirstChar { it.uppercase() }
         }
     }
-    // inflates the views and customizes it to data from the Movie object
+    // inflates the views and customizes it to data from the Event object
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -83,7 +85,6 @@ class EventDetailFragment : Fragment() {
         rootView.findViewById<Button>(R.id.event_list_button).setOnClickListener{
             findNavController().navigate(R.id.EventListFragment)
         }
-
         return rootView
     }
 }

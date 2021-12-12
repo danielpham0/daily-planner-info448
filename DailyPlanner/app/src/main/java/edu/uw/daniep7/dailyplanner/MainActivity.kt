@@ -1,5 +1,4 @@
-/** Daniel Pham: I wrote all of the code for this Main Activity, including the Event
- *  data class and the menus listed. * */
+/** Daniel Pham: I wrote the code for this Main Activity, including the menus listed. * */
 package edu.uw.daniep7.dailyplanner
 
 import android.content.Intent
@@ -23,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            // Sends intent to the event list
             R.id.menu_item_event_list -> {
                 val goToListActivity = Intent(this, MainActivity::class.java)
                 startActivity(goToListActivity)

@@ -1,23 +1,21 @@
-/** Daniel Pham: I wrote all methods and data classes in this Google Network Service,
+/** Daniel Pham: I wrote the methods and data classes in this Google Network Service,
  * which connects our View Model to Google Map's Directions API and translates it into
  * a format that is usable using Moshi. * */
 package edu.uw.daniep7.dailyplanner.network
 
-import android.os.Parcelable
-import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import kotlinx.android.parcel.Parcelize
 import retrofit2.Call
 import retrofit2.Retrofit.Builder
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
-// URL for our Movie API
+
+// URL for our Google API
 private const val BASE_URL = "https://maps.googleapis.com/maps/api/"
 
 interface GoogleApiService {
+    // Grabs directions given an origin and destination
     @GET("directions/json")
     fun getDirections(@Query("arrival_time") arrival_time: Int,
                       @Query("origin") origin: String,

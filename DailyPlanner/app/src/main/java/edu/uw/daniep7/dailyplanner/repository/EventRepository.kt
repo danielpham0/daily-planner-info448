@@ -1,3 +1,6 @@
+/** Daniel Pham: I wrote the methods in this repository, which connect different datasources
+ * and can be used in our view model to be displayed in the UI * */
+
 package edu.uw.daniep7.dailyplanner.repository;
 
 import android.content.ContentValues
@@ -6,7 +9,6 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import edu.uw.daniep7.dailyplanner.BuildConfig
 import edu.uw.daniep7.dailyplanner.data.EventDao
 import edu.uw.daniep7.dailyplanner.model.Event
@@ -20,8 +22,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class EventRepository(private val eventDao: EventDao) {
+    // Our API Key
     private val directionsKey: String = BuildConfig.DIRECTIONS_KEY
-
     val readAllData: LiveData<List<Event>> = eventDao.readAllData()
 
     suspend fun addEvent(event: Event) {
@@ -29,7 +31,6 @@ class EventRepository(private val eventDao: EventDao) {
     }
 
     suspend fun updateEvent(event: Event) {
-        Log.v(TAG, "HERE")
         eventDao.updateEvent(event)
     }
 
@@ -37,6 +38,7 @@ class EventRepository(private val eventDao: EventDao) {
         eventDao.deleteEvent(event)
     }
 
+    // Connects the Google API to Room and finds the directions before adding an event.
     fun getDirectionsAndAdd(scope: CoroutineScope, event: Event) {
         val origin = event.origin ?: event.address
         GoogleApi.retrofitService.getDirections(
@@ -66,6 +68,7 @@ class EventRepository(private val eventDao: EventDao) {
         })
     }
 
+    // Connects the Google API to Room and finds the directions before updating an event.
     fun getDirectionsAndUpdate(scope: CoroutineScope, event: Event) {
         val origin = event.origin ?: event.address
         GoogleApi.retrofitService.getDirections(

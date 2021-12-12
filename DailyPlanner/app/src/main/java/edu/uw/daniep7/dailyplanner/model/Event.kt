@@ -1,3 +1,5 @@
+/** Daniel Pham: I wrote the code for this Event data class, used in the event table and
+ * parcelized to be passed between fragments* */
 package edu.uw.daniep7.dailyplanner.model
 
 import android.os.Parcelable
