@@ -1,6 +1,6 @@
 # A6: Final Project Documentation
 
-* Team Members: Daniel Pham, Jonathan Thomas, Tiffany Tse *
+_Team Members: Daniel Pham, Jonathan Thomas, Tiffany Tse_
 
 ## How to run the application
 
