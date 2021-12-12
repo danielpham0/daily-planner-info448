@@ -1,10 +1,10 @@
-A6: Final Project Documentation
+# A6: Final Project Documentation
 
-Team Members: Daniel Pham, Jonathan Thomas, Tiffany Tse
+* Team Members: Daniel Pham, Jonathan Thomas, Tiffany Tse *
 
-How to run the application
+## How to run the application
 
-Github
+### Github
 
 1.  Clone the following repository:
 
@@ -12,7 +12,7 @@ Github
 
 3.  Open the project on Android Studio, sync and build Gradle to set up the application.
 
-On Android Emulator
+### On Android Emulator
 
 1.  Tools > AVD Manager > Create Virtual Device
 
@@ -20,7 +20,7 @@ On Android Emulator
 
 3.  Press play on the AVD Manager or select your virtual device when running the app.
 
-On Physical Device
+### On Physical Device
 
 1.  Open Settings > About Device > Tap Build Number 7 times to enable Developer Options
 
@@ -28,7 +28,7 @@ On Physical Device
 
 3.  Plug in the device through USB, and select the device when running the app.
 
-Once Application is Open 
+### Once Application is Open 
 
 1.  Simply click the add event button, either via the menu or the button at the bottom right of the menu screen.
 
