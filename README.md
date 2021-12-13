@@ -9,7 +9,7 @@ _Team Members: Daniel Pham, Jonathan Thomas, Tiffany Tse_
 1.   Clone the following repository:
 2.   <https://github.com/info4482021-au21/group-final-project-a6-dailyplanner>
 3.   Open the project on Android Studio, sync and build Gradle to set up the application.
-4.   At the project level 'group-final-project-a6-dailyplanner/DailyPlanner' include a file apikeys.properties with DIRECTIONS_KEY={APIKEY}. This key is located in the documentation and slides.
+4.   At the project level 'group-final-project-a6-dailyplanner/DailyPlanner' include a file apikeys.properties with DIRECTIONS_KEY={APIKEY}. This key is located in the project documentation.
 
 ### On Android Emulator
 
