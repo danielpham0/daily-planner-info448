@@ -8,7 +8,7 @@
     android:background="#15202B">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="10dp"
         tools:context=".AddEventActivity">
         <TextView
@@ -20,63 +20,140 @@
             app:layout_constraintTop_toTopOf="parent"
             android:text="Add an Event!"
             android:textColor="@color/white"
-            android:textSize="30dp"
+            android:textSize="32sp"
             android:layout_marginTop="30dp"
+            />
+        <TextView
+            android:id="@+id/event_title_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_event_header"
+            android:text="What is the name of your event?"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginTop="15dp"
             />
         <EditText
             android:id="@+id/event_title_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Event Title"
+            android:hint="Add a title for your event..."
             android:textColorHint="@color/white"
             android:inputType="text"
+            android:textSize="15sp"
             android:textColor="@color/white"
+            android:layout_marginTop="5dp"
             android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_event_header" />
-
+            app:layout_constraintTop_toBottomOf="@id/event_title_label" />
+        <TextView
+            android:id="@+id/event_type_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_title_input"
+            android:text="What type of event is it?"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginTop="15dp"
+            />
         <Spinner
             android:id="@+id/event_type_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_title_input" />
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/event_type_label" />
 
+        <TextView
+            android:id="@+id/event_mode_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_type_spinner"
+            android:text="How will you be getting there?"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginTop="15dp"
+            />
         <Spinner
             android:id="@+id/event_mode_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_type_spinner" />
-
-        <EditText
+            app:layout_constraintTop_toBottomOf="@+id/event_mode_label" />
+        <TextView
+            android:id="@+id/event_addr_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_mode_spinner"
+            android:text="Where is the event?"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_marginTop="15dp"
+            />
+        <LinearLayout
             android:id="@+id/event_addr_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Event Address"
-            android:textColorHint="@color/white"
-            android:inputType="textPostalAddress"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/white"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_mode_spinner" />
-
+            app:layout_constraintTop_toBottomOf="@+id/event_addr_label"
+            >
+            <EditText
+                android:id="@+id/addr_input"
+                android:layout_width="0dp"
+                android:layout_weight=".9"
+                android:layout_height="wrap_content"
+                android:hint="Search for a location..."
+                android:textSize="15sp"
+                android:textColorHint="@color/white"
+                android:inputType="textPostalAddress"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/event_mode_spinner" />
+            <Button
+                android:id="@+id/addr_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:backgroundTint="#7f7f7f"
+                android:textSize="11dp"
+                android:text="Search"/>
+        </LinearLayout>
         <Spinner
-            android:id="@+id/event_origin_spinner"
+            android:id="@+id/event_addr_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/event_addr_input" />
+        <TextView
+            android:id="@+id/event_arr_time_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_addr_spinner"
+            android:text="When do you need to be there?"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_marginTop="15dp"
+            />
 
         <Button
             android:id="@+id/event_arr_time_input"
@@ -85,16 +162,29 @@
             android:text="Select Arrival Time"
             android:onClick="showTimePickerDialog"
             android:backgroundTint="#808080"
-            android:layout_marginTop="20dp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_origin_spinner"/>
+            app:layout_constraintTop_toBottomOf="@+id/event_arr_time_label"/>
 
+        <TextView
+            android:id="@+id/event_desc_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_arr_time_input"
+            android:text="What are the event details?"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:layout_marginTop="15dp"
+            />
         <EditText
             android:id="@+id/event_desc_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
             android:hint="Event Description"
             android:textColorHint="@color/white"
             android:inputType="textLongMessage"
@@ -102,7 +192,7 @@
             android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/event_arr_time_input" />
+            app:layout_constraintTop_toBottomOf="@+id/event_desc_label" />
 
         <Button
             android:id="@+id/submit_event_button"

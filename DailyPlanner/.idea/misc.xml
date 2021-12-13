@@ -15,7 +15,7 @@
         <entry key="app/src/main/res/layout-w600dp/activity_main.xml" value="0.13139329805996472" />
         <entry key="app/src/main/res/layout-w600dp/fragment_event_detail.xml" value="0.15961199294532627" />
         <entry key="app/src/main/res/layout-w600dp/fragment_event_list.xml" value="0.30499468650371947" />
-        <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.3761282440277043" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/event_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/event_item_layout.xml" value="0.5606469962047806" />

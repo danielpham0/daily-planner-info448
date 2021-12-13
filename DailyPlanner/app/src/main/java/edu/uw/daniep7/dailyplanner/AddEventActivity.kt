@@ -1,11 +1,14 @@
 package edu.uw.daniep7.dailyplanner
 
+import android.Manifest
 import android.app.AlarmManager
 import android.app.AlertDialog
 import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -22,6 +25,9 @@ import edu.uw.daniep7.dailyplanner.viewmodel.EventViewModel
 import androidx.lifecycle.Observer
 import android.widget.TimePicker
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import edu.uw.daniep7.dailyplanner.network.PlaceResult
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -35,28 +41,48 @@ class AddEventActivity : AppCompatActivity() {
     private lateinit var eventViewModel: EventViewModel
     private lateinit var type: String
     private lateinit var mode: String
-    private lateinit var origin: String
+    private lateinit var address: String
     private var eventData = mutableListOf<Event>()
     private var placeData = mutableListOf<PlaceResult>()
     private var hour = 0
     private var min = 0
-    private var dateTime = System.currentTimeMillis()
+    private var dateTime: Long? = null
+    private var userLocation: String? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_event)
 
-        // ORIGIN SPINNER
-        val originSpinner = findViewById<Spinner>(R.id.event_origin_spinner)
-        val originList = mutableListOf<String>()
-        val originAdapter = ArrayAdapter(this,
-            android.R.layout.simple_spinner_item, originList)
-        originSpinner.adapter = originAdapter
-        originSpinner.onItemSelectedListener = object :
+        // HANDLE RETRIEVING THE LAST LOCATION IF WE HAVE PERMISSIONS
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { locationResult : Location? ->
+                    if (locationResult != null) {
+                        userLocation = "${locationResult.latitude}," +
+                                "${locationResult.longitude}"
+                    }}
+        }
+
+        // ADDRESS SPINNER
+        val addressSpinner = findViewById<Spinner>(R.id.event_addr_spinner)
+        val addressList = mutableListOf<String>()
+        val addressAdapter = ArrayAdapter(this,
+            android.R.layout.simple_spinner_item, addressList)
+        addressSpinner.adapter = addressAdapter
+        addressSpinner.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>,
                                         view: View, position: Int, id: Long) {
-                origin = originList[position]
+                address = addressList[position]
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
                 Toast.makeText(this@AddEventActivity,
@@ -100,23 +126,27 @@ class AddEventActivity : AppCompatActivity() {
             }
         }
 
-        // Instantiate View Model and connect it to the adapter
+        // VIEW MODEL AND CONNECTING TO ADAPTERS
         eventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
+        // observe our current list of events
         eventViewModel.readAllData.observe(this, Observer { events ->
             eventData = events.toMutableList()
-            var addressList = events.map{e -> e.address}
-            addressList = listOf("Current Location") + addressList
-            originAdapter.clear();
-            originAdapter.addAll(addressList)
-            originAdapter.notifyDataSetChanged();
         })
-//        eventViewModel.placeData.observe(this, Observer {places ->
-//            placeData = places.toMutableList()
-//            originAdapter.clear();
-//            originAdapter.addAll(addressList)
-//            originAdapter.notifyDataSetChanged();
-//        })
+        // observe the address list we get from searching
+        eventViewModel.placeData.observe(this, Observer {places ->
+            placeData = places.toMutableList()
+            var addressList = places.map{p -> p.name + "-" + p.formatted_address}
+            addressAdapter.clear();
+            addressAdapter.addAll(addressList)
+            addressAdapter.notifyDataSetChanged();
+        })
 
+        // ADDING ON CLICKS
+        val addr_search_button = findViewById<Button>(R.id.addr_search)
+        addr_search_button.setOnClickListener{
+            var searchQuery = this.findViewById<TextView>(R.id.addr_input).text.toString()
+            eventViewModel.getListOfPlaces(searchQuery, userLocation)
+        }
         // on submit send out changes to destinations + add the event based on the correct origin
         val submit_button = findViewById<Button>(R.id.submit_event_button)
         submit_button.setOnClickListener {
@@ -171,23 +201,23 @@ class AddEventActivity : AppCompatActivity() {
                 -1
             )
             // Add Data to Database
-            eventViewModel.getDirectionsAndAdd(event)
-
-            // Create notification once Event is created
-            val intent = Intent(this, ReminderBroadcast::class.java)
-            intent.putExtra("title", event.title)
-            val pendingIntent = PendingIntent.getBroadcast(this,
-                event.arrivalTime, intent,
-                PendingIntent.FLAG_ONE_SHOT)
-            // Set alarm for that notification
-            val alarmManager = this.applicationContext?.getSystemService(ALARM_SERVICE) as AlarmManager
-            val sixtyMinutesInMillis = 1000*60*60
-            alarmManager.set(
-                AlarmManager.RTC_WAKEUP,
-                (event.arrivalTime - sixtyMinutesInMillis).toLong(), pendingIntent)
-
-            Toast.makeText(this, "Successfully added!", Toast.LENGTH_LONG).show()
-            // Navigate Back
+//            eventViewModel.getDirectionsAndAdd(event)
+//
+//            // Create notification once Event is created
+//            val intent = Intent(this, ReminderBroadcast::class.java)
+//            intent.putExtra("title", event.title)
+//            val pendingIntent = PendingIntent.getBroadcast(this,
+//                event.arrivalTime, intent,
+//                PendingIntent.FLAG_ONE_SHOT)
+//            // Set alarm for that notification
+//            val alarmManager = this.applicationContext?.getSystemService(ALARM_SERVICE) as AlarmManager
+//            val sixtyMinutesInMillis = 1000*60*60
+//            alarmManager.set(
+//                AlarmManager.RTC_WAKEUP,
+//                (event.arrivalTime - sixtyMinutesInMillis).toLong(), pendingIntent)
+//
+//            Toast.makeText(this, "Successfully added!", Toast.LENGTH_LONG).show()
+//            // Navigate Back
             val goToListActivity = Intent(this, MainActivity::class.java)
             startActivity(goToListActivity)
         }else{
