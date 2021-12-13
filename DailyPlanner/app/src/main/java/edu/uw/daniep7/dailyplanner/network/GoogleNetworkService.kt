@@ -22,6 +22,11 @@ interface GoogleApiService {
                       @Query("destination") destination: String,
                       @Query("mode") mode: String,
                       @Query("key") key: String):Call<DirectionsResponse>
+    // Grabs places given a search query
+    @GET("place/textsearch/json")
+    fun getPlaces(@Query("query") query: String,
+                      @Query("location") location: String,
+                      @Query("key") key: String):Call<PlacesResponse>
 }
 
 // initialize moshi
@@ -43,6 +48,7 @@ object GoogleApi{
 }
 
 // Data classes for us to work with the JSON we get returned
+// DIRECTIONS
 data class DirectionsResponse(
     var routes: List<Route>
 )
@@ -60,4 +66,13 @@ data class Distance(
 data class Duration(
     var text: String,
     var value: Int
+)
+
+// PLACES
+data class PlacesResponse(
+    var results: List<PlaceResult>
+)
+data class PlaceResult(
+    var formatted_address: String,
+    var name: String
 )

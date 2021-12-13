@@ -9,11 +9,14 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import edu.uw.daniep7.dailyplanner.BuildConfig
 import edu.uw.daniep7.dailyplanner.data.EventDao
 import edu.uw.daniep7.dailyplanner.model.Event
 import edu.uw.daniep7.dailyplanner.network.DirectionsResponse
 import edu.uw.daniep7.dailyplanner.network.GoogleApi
+import edu.uw.daniep7.dailyplanner.network.PlaceResult
+import edu.uw.daniep7.dailyplanner.network.PlacesResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -101,5 +104,4 @@ class EventRepository(private val eventDao: EventDao) {
             }
         })
     }
-
 }

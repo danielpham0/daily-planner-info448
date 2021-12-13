@@ -29,7 +29,8 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.menu_item_add_event -> {
-                Toast.makeText(this, "Will send to add event later.", Toast.LENGTH_SHORT).show()
+                val goToListActivity = Intent(this, AddEventActivity::class.java)
+                startActivity(goToListActivity)
                 true
             }
             R.id.menu_item_weather -> {

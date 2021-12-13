@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#15202B">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        tools:context=".AddEventActivity">
+        <TextView
+            android:id="@+id/add_event_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Add an Event!"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:layout_marginTop="30dp"
+            />
+        <EditText
+            android:id="@+id/event_title_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Event Title"
+            android:textColorHint="@color/white"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_event_header" />
+
+        <Spinner
+            android:id="@+id/event_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_title_input" />
+
+        <Spinner
+            android:id="@+id/event_mode_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_type_spinner" />
+
+        <EditText
+            android:id="@+id/event_addr_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Event Address"
+            android:textColorHint="@color/white"
+            android:inputType="textPostalAddress"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_mode_spinner" />
+
+        <Spinner
+            android:id="@+id/event_origin_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_addr_input" />
+
+        <Button
+            android:id="@+id/event_arr_time_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Arrival Time"
+            android:onClick="showTimePickerDialog"
+            android:backgroundTint="#808080"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_origin_spinner"/>
+
+        <EditText
+            android:id="@+id/event_desc_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Event Description"
+            android:textColorHint="@color/white"
+            android:inputType="textLongMessage"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_arr_time_input" />
+
+        <Button
+            android:id="@+id/submit_event_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Add Event"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_desc_input" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
