@@ -30,7 +30,8 @@ _Team Members: Daniel Pham, Jonathan Thomas, Tiffany Tse_
 
 ### Once Application is Open 
 
-1.  Simply click the add event button, either via the menu or the button at the bottom right of the menu screen.
+1.  Make sure to enable location services for Daily Planner in settings.
+2.  Simply click the add event button, either via the menu or the button at the bottom right of the menu screen.
 
 2.  Input event information, look up any addresses and then click add event to save it.
 
