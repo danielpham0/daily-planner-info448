@@ -3,9 +3,11 @@
  *  These two functions insert our event data into views from the EventDetail Layout* */
 package edu.uw.daniep7.dailyplanner.fragment
 
+import android.content.ContentValues.TAG
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import edu.uw.daniep7.dailyplanner.R
 import edu.uw.daniep7.dailyplanner.model.Event
 import java.time.Instant
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -56,8 +59,9 @@ class EventDetailFragment : Fragment() {
                 event?.origin ?: "Current Location"
             }
             // Formats the arrival time into a readable manner
-            eventArrival = dateFormat.format(Instant.ofEpochSecond(event!!.arrivalTime.toLong())
+            eventArrival = dateFormat.format(Instant.ofEpochSecond(event!!.arrivalTime)
                 .atZone(ZoneId.systemDefault()).toLocalDateTime())
+
             eventType = event!!.eventType
             eventTypeText = event!!.eventType.replaceFirstChar { it.uppercase() }
             eventDesc = event!!.desc
@@ -79,6 +83,7 @@ class EventDetailFragment : Fragment() {
         rootView.findViewById<TextView>(R.id.event_detail_address).text = "Address: $eventAddress"
         rootView.findViewById<TextView>(R.id.event_detail_origin).text = "Origin: $eventOrigin"
         rootView.findViewById<TextView>(R.id.event_detail_num).text = "Event $eventNum of $eventCount"
+
         rootView.findViewById<TextView>(R.id.event_detail_arr_time).text = "$eventArrival"
         rootView.findViewById<TextView>(R.id.event_detail_type).text = "$eventTypeText"
         rootView.findViewById<TextView>(R.id.event_detail_desc).text = "$eventDesc"

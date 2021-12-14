@@ -11,7 +11,6 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -34,27 +33,6 @@ import edu.uw.daniep7.dailyplanner.viewmodel.EventViewModel
 
 // Fragment for the main menu, and a list of events which updates based on current location. (DP)
 class EventListFragment : Fragment() {
-    // Temporary data, to be removed once we have add event working
-    private val tempData: MutableList<Event> = mutableListOf(
-        Event(
-            0, "Go to MGH", "school",
-            "Desc 1.2", null, "1851 NE Grant Ln, Seattle, WA 98105",
-            1639161592, "walking", "Undefined", -1
-        ),
-        Event(
-            0, "Go to TP Tea", "food",
-            "Desc 2", "1851 NE Grant Ln, Seattle, WA 98105",
-            "1312 NE 45th St Seattle, WA 98105",
-            1739161592, "walking", "Undefined", -1
-        ),
-        Event(
-            0, "Go to H Mart", "shopping",
-            "Desc 3", "1312 NE 45th St Seattle, WA 98105",
-            "4216 University Way NE, Seattle, WA 98105",
-            1839364592, "walking", "Undefined", -1
-        )
-    )
-    private var tempCount: Int = 0
     // Instantiate all variables before Creating the views
     var data : MutableList<Event> = mutableListOf()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -115,31 +93,9 @@ class EventListFragment : Fragment() {
         requestLocationUpdates(locationRequest)
 
         // Button for moving to the Add Event activity.
-//        val goToSecondActivity = Intent(activity, SecondActivity::class.java)
+        val goToSecondActivity = Intent(activity, AddEventActivity::class.java)
         rootView.findViewById<Button>(R.id.add_event_button).setOnClickListener{
-//            startActivity(goToSecondActivity)
-            Toast.makeText(activity, "Will connect to add event activity!",
-                Toast.LENGTH_LONG).show()
-            // Here is where we basically create a new event off of the input
-            // -- if it is current location we use a location listener to insert previous location
-            // -- set the origin based on the other events
-            // -- set the address off of google api's find place
-            // -- input check as well
-            eventViewModel.getDirectionsAndAdd(tempData[tempCount])
-
-            // Create notification once Event is created
-            val intent = Intent(context, ReminderBroadcast::class.java)
-            intent.putExtra("title", tempData[tempCount].title)
-            val pendingIntent = PendingIntent.getBroadcast(context,
-                tempData[tempCount].arrivalTime, intent,
-                PendingIntent.FLAG_ONE_SHOT)
-            // Set alarm for that notification
-            val alarmManager = context?.applicationContext?.getSystemService(ALARM_SERVICE) as AlarmManager
-            val sixtyMinutesInMillis = 1000*60*60
-            alarmManager.set(AlarmManager.RTC_WAKEUP,
-                (tempData[tempCount].arrivalTime - sixtyMinutesInMillis).toLong(), pendingIntent)
-
-            if (tempCount + 1 < tempData.size) tempCount +=1
+            startActivity(goToSecondActivity)
         }
         return rootView
     }

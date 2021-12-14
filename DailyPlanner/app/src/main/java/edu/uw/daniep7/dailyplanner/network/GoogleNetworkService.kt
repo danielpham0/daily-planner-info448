@@ -17,12 +17,12 @@ private const val BASE_URL = "https://maps.googleapis.com/maps/api/"
 interface GoogleApiService {
     // Grabs directions given an origin and destination
     @GET("directions/json")
-    fun getDirections(@Query("arrival_time") arrival_time: Int,
+    fun getDirections(@Query("arrival_time") arrival_time: Long,
                       @Query("origin") origin: String,
                       @Query("destination") destination: String,
                       @Query("mode") mode: String,
                       @Query("key") key: String):Call<DirectionsResponse>
-    // Grabs places given a search query
+    // Grabs places given a search query and reference location
     @GET("place/textsearch/json")
     fun getPlaces(@Query("query") query: String,
                       @Query("location") location: String,

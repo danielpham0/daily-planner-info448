@@ -10,12 +10,14 @@ package edu.uw.daniep7.dailyplanner.adapters
 import android.app.AlarmManager
 import android.app.AlertDialog
 import android.app.PendingIntent
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -99,7 +101,7 @@ class EventAdapter(private val navController: NavController, private val viewMod
                 // Delete the notification that was previously set
                 val intent = Intent(context, ReminderBroadcast::class.java)
                 val pendingIntent = PendingIntent.getBroadcast(context,
-                    resultItem.arrivalTime, intent,
+                    resultItem.arrivalTime.toInt(), intent,
                     PendingIntent.FLAG_CANCEL_CURRENT)
                 val alarmManager = context?.applicationContext?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 alarmManager.cancel(pendingIntent)
@@ -121,11 +123,11 @@ class EventAdapter(private val navController: NavController, private val viewMod
         val dateFormat = DateTimeFormatter.ofPattern("HH:mm")
             .withZone(ZoneOffset.UTC)
         val arrTime = dateFormat.format(
-            Instant.ofEpochSecond(resultItem.arrivalTime.toLong())
+            Instant.ofEpochSecond(resultItem.arrivalTime)
             .atZone(ZoneId.systemDefault()).toLocalDateTime())
         val depTime = dateFormat.format(
             Instant.ofEpochSecond((resultItem.arrivalTime -
-                resultItem.duration).toLong())
+                resultItem.duration))
             .atZone(ZoneId.systemDefault())
             .toLocalDateTime())
         val curTime = System.currentTimeMillis()/1000

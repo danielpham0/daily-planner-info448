@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--Daniel Pham: I coded this layout file. -->
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
@@ -20,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:text="Add an Event!"
             android:textColor="@color/white"
-            android:textSize="32sp"
+            android:textSize="35sp"
             android:layout_marginTop="30dp"
             />
         <TextView
@@ -154,15 +155,14 @@
             android:textSize="20dp"
             android:layout_marginTop="15dp"
             />
-
         <Button
             android:id="@+id/event_arr_time_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Select Arrival Time"
-            android:onClick="showTimePickerDialog"
             android:backgroundTint="#808080"
             android:textSize="12sp"
+            android:onClick="showTimePickerDialog"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/event_arr_time_label"/>
@@ -185,7 +185,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textSize="15sp"
-            android:hint="Event Description"
+            android:hint="Describe your event..."
             android:textColorHint="@color/white"
             android:inputType="textLongMessage"
             android:textColor="@color/white"

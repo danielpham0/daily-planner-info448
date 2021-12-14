@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "event_table")
 @Parcelize
-data class Event (
+data class Event(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val title: String,
@@ -17,7 +17,7 @@ data class Event (
     val desc: String,
     var origin: String?,
     val address: String,
-    val arrivalTime: Int,
+    val arrivalTime: Long,
     val mode: String,
     var distance: String,
     var duration: Int
