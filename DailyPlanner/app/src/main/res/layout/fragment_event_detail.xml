@@ -7,7 +7,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.EventDetailFragment">
+    tools:context=".fragment.EventDetailFragment"
+    android:background="@color/black">
     <ImageView
         android:id="@+id/event_detail_banner"
         android:layout_width="match_parent"
@@ -18,6 +19,7 @@
     <TextView
         android:id="@+id/event_detail_title"
         android:layout_width="wrap_content"
+        android:maxWidth="285dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/event_detail_banner"
         app:layout_constraintLeft_toLeftOf="parent"
