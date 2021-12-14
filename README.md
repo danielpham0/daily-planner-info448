@@ -2,6 +2,9 @@
 
 _Team Members: Daniel Pham, Jonathan Thomas, Tiffany Tse_
 
+## Video Demo
+https://drive.google.com/file/d/1Xz2RQ45-tb4lfpXq0FT5QNuZP6hDDc2i/view?usp=sharing
+
 ## How to run the application
 
 ### Github
